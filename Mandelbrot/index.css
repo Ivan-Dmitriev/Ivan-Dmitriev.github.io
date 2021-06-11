@@ -1,0 +1,38 @@
+#input_max_iterations1 {
+    background-color: white;
+}
+
+#input_max_iterations2 {
+    background-color: rgb(221, 9, 9);
+}
+
+.button {
+    background-color: white; /* Green */
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border: 2px solid red;
+    opacity: 1;
+  }
+  #best_button {
+    background-color: white; /* Green */
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border: 2px solid red;
+    opacity: 1;
+  }
+
+  
+  .button:hover {
+    background-color: #f44336;
+    color: white;
+  }

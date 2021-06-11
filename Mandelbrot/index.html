@@ -3,6 +3,8 @@
 
 <head>
   <title>Mandelbrot</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="index.css">
 
   <script type="text/javascript" src="glMatrix-0.9.5.min.js"></script>
   <style>
@@ -64,7 +66,7 @@
           n = i;
       }
       float color = float(n) / 1024.0;
-      gl_FragColor = vec4(color * 0.1, color / 50.0, color * 47.0, 1.0);
+      gl_FragColor = vec4(color * 0.1, color / 3.0, color * 39.0, 1.0);
     }
 </script>
 
@@ -170,8 +172,6 @@
       gl.uniform1f(shaderProgram.mouse_pos_y_uniform, mouse_pos_y);
       gl.uniform1f(shaderProgram.mousewheel_uniform, OldWheel);
 
-
-
       //gl.uniform2f(shaderProgram.CurPos_uniform, CurPos);
 
     }
@@ -222,7 +222,7 @@
         alert(xmlhttp.responseText);
       }
       */
-      mouse_pos_x = mouse_pos_y = 0;
+      mouse_pos_x = mouse_pos_y = 300;
       OldWheel = 125.0;
 
       var canvas = document.getElementById("wegl-canvas");
@@ -236,12 +236,53 @@
       drawScene();
       tick();
     }
+    function IsString(Str) {
+      if (Str !== "string")
+        return true;
+      for (let i = 0; i < Str.length && Str[i]; ++i)
+        if (a[i] < '0' || a[i] > 9)
+          return true;
+      return false;
+    }
+    var ischanged = false;
 
     function update_checkers_max_iterations() {
-      data = document.getElementById('input_checkers_max_iterations').value;
+      //var btnCheck = document.getElementsByClassName("button");
+      document.getElementById("best_button").disable = true;
+      data = document.getElementById('input_max_iterations1').value;
+      //document.getElementById('input_max_iterations1').addlist
       checkers_max_iterations = parseInt(data);
       if (isNaN(checkers_max_iterations))
-        checkers_max_iterations = 1;
+        checkers_max_iterations = 30;
+      //btnCheck.disabled = false;
+      //btnCheck2.disabled = true;
+      /*
+      if (IsString(checkers_max_iterations)) {
+        if (IsString(checkers_max_iterations)) {
+          document.getElementById("input_max_iterations1").id = "input_max_iterations2";
+          ischanged = true;
+        }
+        else {
+          document.getElementById("input_max_iterations2").id = "input_max_iterations1";
+          ischanged = false;
+        }
+      */
+      /*
+       if (IsString(checkers_max_iterations)) {
+         if (IsString(checkers_max_iterations))
+           document.getElementsByClassName("button").className = "button2";
+         else
+           document..getElementsByClassName("button2").className = "button";
+ 
+       }
+ */
+      //document.getElementById('input_max_iterations2').id = "input_max_iterations1";
+      /*
+    if (typeof checkers_max_iterations === "number" && document.getElementById("input_max_iterations1").id === undefined)
+      document.getElementById("input_max_iterations2").id = "#input_max_iterations1";
+    else if (typeof checkers_max_iterations !== "number")
+      document.getElementById("input_max_iterations1").id = "#input_max_iterations2";
+    */
       //alert(data);
     }
   </script>
@@ -294,8 +335,9 @@
     </script>
     <br />
 
-    <label for="input_checkers_max_iterations">Search iterations:</label> <input type="text"
-      id="input_checkers_max_iterations" onkeyup="update_checkers_max_iterations()"><br>
+    <label for="input_max_iterations1">Maximum iterations:</label> <input type="text" id="input_max_iterations1"
+      onkeyup="update_checkers_max_iterations()"><br>
+    <button class="button" disabled="disabled">You should use only numbers!</button>
   </body>
 
 </html>
