@@ -105,10 +105,10 @@
 
       var firstDay = (new Date(year, month)).getDay();
 
-      tbl = document.getElementById("calendar-body");
+      calendar_body = document.getElementById("calendar-body");
 
 
-      tbl.innerHTML = "";
+      calendar_body.innerHTML = "";
 
 
       monthAndYear.innerHTML = months[month] + " " + year;
@@ -147,7 +147,7 @@
 
         }
 
-        tbl.appendChild(row);
+        calendar_body.appendChild(row);
       }
     }
     function daysInMonth(iMonth, iYear) {
