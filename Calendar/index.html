@@ -20,6 +20,24 @@
         <thead id="thead-month"></thead>
         <tbody id="calendar-body"></tbody>
       </table>
+      <div class="footer-container-calendar">
+        <label for="month">Jump To: </label>
+        <select id="month" onchange="jump()">
+          <option value=0>January</option>
+          <option value=1>February</option>
+          <option value=2>March</option>
+          <option value=3>April</option>
+          <option value=4>May</option>
+          <option value=5>June</option>
+          <option value=6>July</option>
+          <option value=7>August</option>
+          <option value=8>September</option>
+          <option value=9>October</option>
+          <option value=10>November</option>
+          <option value=11>December</option>
+        </select>
+        <select id="year" onchange="jump()"></select>
+      </div>
 
     </div>
   </div>
@@ -35,16 +53,15 @@
     var today = new Date();
     var currentMonth = today.getMonth();
     var currentYear = today.getFullYear();
-    //var selectYear = document.getElementById("year");
-    //var selectMonth = document.getElementById("month");
-
+    var selectYear = document.getElementById("year");
+    var selectMonth = document.getElementById("month");
 
     var createYear = generate_year_range(1970, 2050);
     /** or
     * createYear = generate_year_range( 1970, currentYear );
     */
 
-    //document.getElementById("year").innerHTML = createYear;
+    document.getElementById("year").innerHTML = createYear;
 
     var calendar = document.getElementById("calendar");
     var lang = calendar.getAttribute('data-lang');
@@ -95,8 +112,8 @@
 
 
       monthAndYear.innerHTML = months[month] + " " + year;
-      //selectYear.value = year;
-      //selectMonth.value = month;
+      selectYear.value = year;
+      selectMonth.value = month;
 
       // creating all cells
       var date = 1;
@@ -132,9 +149,7 @@
 
         tbl.appendChild(row);
       }
-
     }
-
     function daysInMonth(iMonth, iYear) {
       return 32 - new Date(iYear, iMonth, 32).getDate();
     }
