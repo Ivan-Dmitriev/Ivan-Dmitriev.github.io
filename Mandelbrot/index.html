@@ -237,25 +237,38 @@
       tick();
     }
     function IsString(Str) {
+      /*
       if (Str !== "string")
-        return true;
-      for (let i = 0; i < Str.length && Str[i]; ++i)
-        if (a[i] < '0' || a[i] > 9)
-          return true;
-      return false;
+        return false;
+      */
+      for (var i = 0; i < Str.length; i++)
+        if (Str[i] < '0' || Str[i] > '9')
+          return false;
+      return true;
     }
     var ischanged = false;
 
     function update_checkers_max_iterations() {
       //var btnCheck = document.getElementsByClassName("button");
-      document.getElementById("best_button").disable = true;
+      var mybutton = document.getElementById("best_button");
+      //mybutton.classList.add("button1");
       data = document.getElementById('input_max_iterations1').value;
       //document.getElementById('input_max_iterations1').addlist
       checkers_max_iterations = parseInt(data);
       if (isNaN(checkers_max_iterations))
         checkers_max_iterations = 30;
-      //btnCheck.disabled = false;
-      //btnCheck2.disabled = true;
+      if (!IsString(data)) {
+        //mybutton = document.getElementById("best_button");
+        mybutton.classList.remove("button1");
+        mybutton.classList.add("button2");
+        ischanged = true;
+      }
+      else if (ischanged) {
+        //mybutton = document.getElementById("best_button");
+        ischanged = false;
+        mybutton.classList.remove("button2");
+        mybutton.classList.add("button1");
+      }
       /*
       if (IsString(checkers_max_iterations)) {
         if (IsString(checkers_max_iterations)) {
@@ -275,7 +288,7 @@
            document..getElementsByClassName("button2").className = "button";
  
        }
- */
+     */
       //document.getElementById('input_max_iterations2').id = "input_max_iterations1";
       /*
     if (typeof checkers_max_iterations === "number" && document.getElementById("input_max_iterations1").id === undefined)
@@ -337,7 +350,8 @@
 
     <label for="input_max_iterations1">Maximum iterations:</label> <input type="text" id="input_max_iterations1"
       onkeyup="update_checkers_max_iterations()"><br>
-    <button class="button" disabled="disabled">You should use only numbers!</button>
+    <button id="best_button" class="button1">You should use only numbers!</button>
+
   </body>
 
 </html>
