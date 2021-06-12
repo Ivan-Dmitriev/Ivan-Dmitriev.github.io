@@ -46,7 +46,12 @@
       int n;
       vec2 compl, compl1, compl0;
       
-      compl0 = vec2((gl_FragCoord.x - mouse_pos_x) / mouseWheel, (gl_FragCoord.y + mouse_pos_y - 500.0) / mouseWheel);
+      compl0 = -1.0 + 2.0 * gl_FragCoord.xy / 400.0;
+      compl0 *= mouseWheel;
+      compl0.x += mouse_pos_x;
+      compl0.y += mouse_pos_y;
+       
+      //compl0 = vec2((gl_FragCoord.x - mouse_pos_x) / mouseWheel, (gl_FragCoord.y + mouse_pos_y - 500.0) / mouseWheel);
  
       //compl0 = vec2(gl_FragCoord.x / 125.0 - 2.0 - mouse_pos_x, gl_FragCoord.y / 125.0 - 2.0 + mouse_pos_y - 2.4);
       //compl0 = vec2(gl_FragCoord.x / mouseWheel - 2.0 - mouse_pos_x, gl_FragCoord.y / mouseWheel - 2.0 + mouse_pos_y - 2.4);
@@ -63,7 +68,7 @@
         compl1.y =  compl.x * compl.y * 2.0 + compl0.y;
         compl = compl1;
         if (compl.x * compl.x + compl.y * compl.y < 4.0)
-          n = i;
+         n = i;
       }
       float color = float(n) / 1024.0;
       gl_FragColor = vec4(color * 0.1, color / 3.0, color * 39.0, 1.0);
@@ -80,13 +85,15 @@
 </script>
 
   <script type="text/javascript">
-    var mouse_pos_x, mouse_pos_y;
+    var mouse_pos_x = 0, mouse_pos_y = 0;
     var gl;
     var checkers_max_iterations = 30;
     var OldWheel;
     var glblMouseCoordX;
     var glblMouseCoordY;
     var size = 100.0;
+    var zoom = 1.0;
+
 
     function initGL(canvas) {
       try {
@@ -170,7 +177,7 @@
       gl.uniform1i(shaderProgram.max_iterations_uniform, checkers_max_iterations);
       gl.uniform1f(shaderProgram.mouse_pos_x_uniform, mouse_pos_x);
       gl.uniform1f(shaderProgram.mouse_pos_y_uniform, mouse_pos_y);
-      gl.uniform1f(shaderProgram.mousewheel_uniform, OldWheel);
+      gl.uniform1f(shaderProgram.mousewheel_uniform, zoom);
 
       //gl.uniform2f(shaderProgram.CurPos_uniform, CurPos);
 
@@ -222,8 +229,9 @@
         alert(xmlhttp.responseText);
       }
       */
-      mouse_pos_x = mouse_pos_y = 300;
-      OldWheel = 125.0;
+      mouse_pos_x = mouse_pos_y = 0;
+      //OldWheel = 125.0;
+      zoom = 1;
 
       var canvas = document.getElementById("wegl-canvas");
       initGL(canvas);
@@ -337,12 +345,17 @@
         glblMouseCoordY = e.clientY;
 
         if (flag) {
-          gl.uniform1f(shaderProgram.mouse_pos_x_uniform, mouse_pos_x += e.movementX);
-          gl.uniform1f(shaderProgram.mouse_pos_y_uniform, mouse_pos_y += e.movementY);
+          mouse_pos_x -= e.movementX * 0.003 * zoom;
+          mouse_pos_y += e.movementY * 0.003 * zoom;
+          //mouse_pos_x += e.movementX;
+          //mouse_pos_y += e.movementY
+          //gl.uniform1f(shaderProgram.mouse_pos_x_uniform, mouse_pos_x);
+          //gl.uniform1f(shaderProgram.mouse_pos_y_uniform, mouse_pos_y);
         }
       }
       function MouseWheelProcess(e) {
         OldWheel += e.deltaY;
+        zoom = zoom * (event.deltaY > 0 ? 1.1 : 0.8);
       }
 
     </script>
