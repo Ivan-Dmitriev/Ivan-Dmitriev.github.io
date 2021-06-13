@@ -4,154 +4,144 @@
 <head>
   <title>Calendar</title>
   <meta charset="utf-8" />
-  <link rel="stylesheet" type="text/css" href="index.css">
+  <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
-  <div class="wrapper">
-    <div class="container-calendar">
-      <h3 id="monthAndYear"></h3>
-      <div class="button-container-calendar">
-        <button id="previous" onclick="previous()">&#8249;</button>
-        <button id="next" onclick="next()">&#8250;</button>
-      </div>
-
-      <table class="table-calendar" id="calendar" data-lang="en">
-        <thead id="thead-month"></thead>
-        <tbody id="calendar-body"></tbody>
-      </table>
-      <div class="footer-container-calendar">
-        <label for="month">Choose month and year: </label>
-        <select id="month" onchange="jump()">
-          <option value=0>January</option>
-          <option value=1>February</option>
-          <option value=2>March</option>
-          <option value=3>April</option>
-          <option value=4>May</option>
-          <option value=5>June</option>
-          <option value=6>July</option>
-          <option value=7>August</option>
-          <option value=8>September</option>
-          <option value=9>October</option>
-          <option value=10>November</option>
-          <option value=11>December</option>
-        </select>
-        <select id="year" onchange="jump()"></select>
-      </div>
-
+  <div class="container-calendar">
+    <h3 id="monthAndYear"></h3>
+    <div class="button-container-calendar">
+      <button id="previous" onclick="previous_month()">&#8249;</button>
+      <button id="next" onclick="next_month()">&#8250;</button>
     </div>
+
+    <table class="table-calendar" id="calendar" data-lang="en">
+      <thead id="thead-month"></thead>
+      <tbody id="calendar-body"></tbody>
+    </table>
+    <div class="change-month">
+      <label for="month">Choose month and year: </label>
+      <select id="month" onchange="change_month_year()">
+        <option value=0>January</option>
+        <option value=1>February</option>
+        <option value=2>March</option>
+        <option value=3>April</option>
+        <option value=4>May</option>
+        <option value=5>June</option>
+        <option value=6>July</option>
+        <option value=7>August</option>
+        <option value=8>September</option>
+        <option value=9>October</option>
+        <option value=10>November</option>
+        <option value=11>December</option>
+      </select>
+      <select id="year" onchange="change_month_year()"></select>
+    </div>
+
   </div>
   <script type="text/javascript">
     function generate_year_range(start, end) {
-      var years = "";
-      for (var year = start; year <= end; year++) {
-        years += "<option value='" + year + "'>" + year + "</option>";
+      let choose_year = "";
+      for (let year = start; year <= end; year++) {
+        choose_year += "<option value='" + year + "'>" + year + "</option>";
       }
-      return years;
+      return choose_year;
     }
 
-    var today = new Date();
-    var currentMonth = today.getMonth();
-    var currentYear = today.getFullYear();
-    var selectYear = document.getElementById("year");
-    var selectMonth = document.getElementById("month");
+    let today = new Date();
+    let currentMonth = today.getMonth();
+    let currentYear = today.getFullYear();
+    let selectYear = document.getElementById("year");
+    let selectMonth = document.getElementById("month");
 
-    var createYear = generate_year_range(1970, 2050);
-    /** or
-    * createYear = generate_year_range( 1970, currentYear );
-    */
+    let createYear = generate_year_range(2017, 2030);
 
     document.getElementById("year").innerHTML = createYear;
 
-    var calendar = document.getElementById("calendar");
-    var lang = calendar.getAttribute('data-lang');
+    let calendar = document.getElementById("calendar");
+    let lang = calendar.getAttribute('data-lang');
 
-    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    var days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-    var dayHeader = "<tr>";
-    for (day in days) {
-      dayHeader += "<th data-days='" + days[day] + "'>" + days[day] + "</th>";
+    let dayHeader = "<tr>";
+    for (let i = 0; i < days.length; i++) {
+      dayHeader += "<th data-days='" + days[i] + "'>" + days[i] + "</th>";
     }
     dayHeader += "</tr>";
 
     document.getElementById("thead-month").innerHTML = dayHeader;
 
-
     monthAndYear = document.getElementById("monthAndYear");
-    showCalendar(currentMonth, currentYear);
+    drawCalendar(currentMonth, currentYear);
 
-
-
-    function next() {
-      currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
+    function next_month() {
+      if (currentMonth === 11)
+        currentYear++;
       currentMonth = (currentMonth + 1) % 12;
-      showCalendar(currentMonth, currentYear);
+      drawCalendar(currentMonth, currentYear);
     }
 
-    function previous() {
-      currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
-      currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
-      showCalendar(currentMonth, currentYear);
+    function previous_month() {
+      if (currentMonth === 0)
+      {
+        currentYear--;
+        currentMonth = 11; 
+      }  
+      else
+        currentMonth--;  
+      drawCalendar(currentMonth, currentYear);
     }
 
-    function jump() {
+    function change_month_year() {
       currentYear = parseInt(selectYear.value);
       currentMonth = parseInt(selectMonth.value);
-      showCalendar(currentMonth, currentYear);
+      drawCalendar(currentMonth, currentYear);
     }
 
-    function showCalendar(month, year) {
-
-      var firstDay = (new Date(year, month)).getDay();
+    function drawCalendar(month, year) {
+      let firstDay = (new Date(year, month)).getDay() - 1;
 
       calendar_body = document.getElementById("calendar-body");
-
-
       calendar_body.innerHTML = "";
-
 
       monthAndYear.innerHTML = months[month] + " " + year;
       selectYear.value = year;
       selectMonth.value = month;
 
-      // creating all cells
-      var date = 1;
-      for (var i = 0; i < 6; i++) {
-        var row = document.createElement("tr");
+      let date = 1;
+      for (let i = 0; i < 6; i++) {
+        let row = document.createElement("tr");
 
-        for (var j = 0; j < 7; j++) {
+        for (let j = 0; j < 7; j++) {
           if (i === 0 && j < firstDay) {
-            cell = document.createElement("td");
-            cellText = document.createTextNode("");
-            cell.appendChild(cellText);
-            row.appendChild(cell);
+            one_cell = document.createElement("td");
+            one_cellText = document.createTextNode("");
+            one_cell.append(one_cellText);
+            row.append(one_cell);
           } else if (date > daysInMonth(month, year)) {
             break;
-          } else {
-            cell = document.createElement("td");
-            cell.setAttribute("data-date", date);
-            cell.setAttribute("data-month", month + 1);
-            cell.setAttribute("data-year", year);
-            cell.setAttribute("data-month_name", months[month]);
-            cell.className = "date-picker";
-            cell.innerHTML = "<span>" + date + "</span>";
+          } 
+          else 
+          {
+            one_cell = document.createElement("td");
+            one_cell.className = "day_style";
+            one_cell.innerHTML = "<span>" + date + "</span>";
 
             if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
-              cell.className = "date-picker selected";
+              one_cell.className = "day_style selected";
             }
-            row.appendChild(cell);
+            row.append(one_cell);
             date++;
           }
 
 
         }
-
-        calendar_body.appendChild(row);
+        calendar_body.append(row);
       }
     }
-    function daysInMonth(iMonth, iYear) {
-      return 32 - new Date(iYear, iMonth, 32).getDate();
+    function daysInMonth(Month, Year) {
+      return 32 - new Date(Year, Month, 32).getDate();
     }
 
   </script>

@@ -1,40 +1,29 @@
 html {
   font-family: "Times New Roman";
   font-size: 15px;
-  line-height: 1.4;
   color: #444;
 }
 
 body {
-  margin: 0;
   background: #504f4f;
   font-size: 1em;
   background-color: rgba(9, 30, 41, 0.878);
-
-}
-
-.wrapper {
-  margin: 15px auto;
-  max-width: 1100px;
 }
 
 .container-calendar {
   background: #ffffff;
   padding: 15px;
-  max-width: 475px;
+  width: 500px;
   margin: 0 auto;
-  overflow: auto;
 }
 
 .button-container-calendar button {
   cursor: pointer;
-  display: inline-block;
-  zoom: 1;
   background: #000000;
   color: #fff;
   border: 1px solid #000000;
   border-radius: 4px;
-  padding: 5px 10px;
+  padding: 5px 5px;
 }
 
 .table-calendar {
@@ -43,19 +32,15 @@ body {
 }
 
 .table-calendar td, .table-calendar th {
-  padding: 5px;
-  border: 1px solid #e2e2e2;
+  padding: 7px;
+  border: 1px solid #7c7474;
   text-align: center;
-  vertical-align: top;
 }
 
-.date-picker.selected {
+.day_style.selected {
+  text-align: center;
   font-weight: bold;
-}
-
-.date-picker.selected span {
-  border-bottom: 2px solid currentColor;
-  text-align: center;
+  color: red;
 }
 
 #monthAndYear {
@@ -78,19 +63,12 @@ body {
   float: right;
 }
 
-.footer-container-calendar {
-  margin-top: 1em;
-  border-top: 1px solid #dadada;
-  padding: 10px 0;
-}
+.change-month select {
+  margin-top: 10px;
 
-.footer-container-calendar select {
-  cursor: pointer;
-  display: inline-block;
-  zoom: 1;
   background: #ffffff;
-  color: #585858;
-  border: 1px solid #bfc5c5;
+  color: black;
+  border: 1px solid black;
   border-radius: 3px;
   padding: 5px 1em;
 }
