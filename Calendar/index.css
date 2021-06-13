@@ -51,22 +51,11 @@ body {
 
 .date-picker.selected {
   font-weight: bold;
-  outline: 1px dashed #00BCD4;
 }
 
 .date-picker.selected span {
   border-bottom: 2px solid currentColor;
   text-align: center;
-}
-
-/* sunday */
-.date-picker:nth-child(1) {
-color: black;
-}
-
-/* friday */
-.date-picker:nth-child(6) {
-color: black;
 }
 
 #monthAndYear {
