@@ -83,13 +83,12 @@
     }
 
     function previous_month() {
-      if (currentMonth === 0)
-      {
+      if (currentMonth === 0) {
         currentYear--;
-        currentMonth = 11; 
-      }  
+        currentMonth = 11;
+      }
       else
-        currentMonth--;  
+        currentMonth--;
       drawCalendar(currentMonth, currentYear);
     }
 
@@ -121,16 +120,18 @@
             row.append(one_cell);
           } else if (date > daysInMonth(month, year)) {
             break;
-          } 
-          else 
-          {
+          }
+          else {
             one_cell = document.createElement("td");
             one_cell.className = "day_style";
             one_cell.innerHTML = "<span>" + date + "</span>";
 
-            if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
-              one_cell.className = "day_style selected";
-            }
+            if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth())
+              one_cell.className = "day_style_selected";
+            else if (j == 5 || j == 6)
+              one_cell.className = "weekend_style";
+
+
             row.append(one_cell);
             date++;
           }

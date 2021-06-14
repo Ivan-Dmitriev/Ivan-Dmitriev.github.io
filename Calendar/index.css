@@ -32,12 +32,18 @@ body {
 }
 
 .table-calendar td, .table-calendar th {
-  padding: 7px;
+  padding:  7px;
   border: 1px solid #7c7474;
   text-align: center;
 }
 
-.day_style.selected {
+.day_style_selected {
+  text-align: center;
+  font-weight: bold;
+  color: rgb(0, 145, 255);
+}
+
+.weekend_style {
   text-align: center;
   font-weight: bold;
   color: red;
@@ -51,6 +57,7 @@ body {
 .button-container-calendar {
   position: relative;
   margin-bottom: 1em;
+  
   overflow: hidden;
   clear: both;
 }
