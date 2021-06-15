@@ -45,7 +45,6 @@ const requestListener = function (req, res) {
       if (data !== "") {
         Message = data;
         all_messages_array[Num++] = data;
-        window.all_messages_array = all_messages_array;
       }
       res.end();
     })
@@ -57,7 +56,7 @@ const requestListener = function (req, res) {
   else if (req.url === "/getMessage") {
     IsMessage = true;
     res.writeHead(200);
-    res.end(JSON.stringify(messages_array));
+    res.end(JSON.stringify(all_messages_array));
     console.log("Getting messages_array from user...");
   }
   else if (req.url.endsWith(".css")) {

@@ -2,11 +2,11 @@
     width: 100%;
     height: 100%;
     background-color: #000;
-    position: relative;
 }
 #single_user_message {
     background-color: black;
     color: red;
+    overflow: hidden;
 }
  p {
 	 font-family: 'Times New Roman', Times, serif;
