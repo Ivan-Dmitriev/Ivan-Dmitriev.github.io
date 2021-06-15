@@ -1,0 +1,44 @@
+ body {
+	 background-color: #000;
+}
+ .container {
+	 margin-left: auto;
+	 margin-right: auto;
+	 padding-left: 1em;
+	 padding-right: 1em;
+	 max-width: 690px;
+}
+ p {
+	 font-family: 'Times New Roman', Times, serif;
+	 font-size: 1.5em;
+     color: white;
+}
+
+#base_input {
+    margin: 5px;
+    background-color: white;
+}
+
+#myuser_name {
+    margin: 5px;
+    background-color: white;
+}
+
+#mymessage {
+    width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    transition: width 0.4s ease-in-out;
+    margin: 5px;
+}
+
+#mymessage:focus {
+    width: 700px;
+}
