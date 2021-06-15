@@ -1,21 +1,26 @@
  body {
-	 background-color: #000;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    position: relative;
 }
- .container {
-	 margin-left: auto;
-	 margin-right: auto;
-	 padding-left: 1em;
-	 padding-right: 1em;
-	 max-width: 690px;
+#single_user_message {
+    background-color: black;
+    color: red;
 }
  p {
 	 font-family: 'Times New Roman', Times, serif;
-	 font-size: 1.5em;
+	 font-size: 1.4em;
      color: white;
 }
 
 #base_input {
-    margin: 5px;
+    margin: 10px;
+    background-color: white;
+}
+
+#send {
+    margin: 10px;
     background-color: white;
 }
 
@@ -24,7 +29,7 @@
     background-color: white;
 }
 
-#mymessage {
+#my_message {
     width: 130px;
     box-sizing: border-box;
     border: 2px solid #ccc;
@@ -39,6 +44,6 @@
     margin: 5px;
 }
 
-#mymessage:focus {
+#my_message:focus {
     width: 700px;
 }

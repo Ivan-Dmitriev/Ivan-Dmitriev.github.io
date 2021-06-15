@@ -4,19 +4,72 @@
     <meta charset="UTF_8" />
     <title>Sample hosted HTML</title>
     <link rel="stylesheet" href="styles.css">
+    <p>Chat server</p>
+    <input id="myuser_name" type="text" name="User_name" /><br>
+    <input id="my_message" type="text" name="User_message" onkeydown="changeMessage(event)" /><br>
+    <button id="send" onclick="sendMessage()">Send message</button>
+    <button id="base_input" onclick="getMessage()">Get message</button>
+
+    <script type="text/javascript">
+        var username;
+        var mymessage;
+        var Messages = [];
+        var current_message;
+
+        function addNewMessage(user, current_message) {
+            Messages.push({ user: `${current_message}` });
+        }
+
+        function CreateChat() {
+            document.getElementById("single_user_message").innerHTML = "";
+            for (let i = 0; i < Messages.length; i++) {
+                const elem = document.createElement("p");
+                const Textnode = document.createTextNode(Messages[i]);
+                elem.appendChild(Textnode);
+                const My_body = document.getElementById("single_user_message");
+                My_body.appendChild(elem);
+            }
+        }
+
+        function sendMessage() {
+            username = document.getElementById("myuser_name").value;
+            current_message = document.getElementById("my_message").value;
+
+            if (mymessage != "") {
+                fetch("/newMessage", { method: 'POST', body: `${username}` + ": " + mymessage });
+                addNewMessage(username, current_message);
+                document.getElementById("my_message").value = "";
+            }
+        }
+
+        async function getMessage() {
+            try {
+                const responce = await window.fetch("/getMessage", { method: 'GET' });
+                if (!responce.ok)
+                    throw new Error(`Response status is: ${response.status}`);
+                Messages = JSON.parse(await responce.text());
+                CreateChat();
+            } catch (err) {
+                console.log(err.message);
+            }
+            setTimeout(getMessage, 3000);
+        }
+
+        function changeMessage(e) {
+            mymessage = document.getElementById("my_message").value;
+            //if (e.code == 'Enter')
+            //    sendMessage();
+        }
+
+        function initChat() {
+            setTimeout(getMessage, 0);
+        }
+    </script>
 </head>
 
-<body>
-    <div class="center">
-        <p id="chat_proccesing">Chat server</p>
+<body onload="initChat()">
+    <div id="single_user_message">
     </div>
-    <form action="/" method="post">
-        <input id="myuser_name" type="text" name="User_name" /><br />
-        <input id="mymessage" type="text" name="User_message" /><br />
-        <button id="base_input" onclick="SendMessage()">Send message</button>
-        <button id="base_input" onclick="GetMessage()">Get message</button>
-    </form>
-
 </body>
 
 </html>
