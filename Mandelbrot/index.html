@@ -40,6 +40,8 @@
     uniform float size;
     uniform float mouse_pos_x, mouse_pos_y;
     uniform float mouseWheel;
+    uniform float height;
+    uniform float width;
 
     void main(void)
     {
@@ -47,15 +49,10 @@
       vec2 compl, compl1, compl0;
       
       compl0 = -1.0 + 2.0 * gl_FragCoord.xy / 400.0;
-      compl0 *= mouseWheel;
-      compl0.x += mouse_pos_x;
-      compl0.y += mouse_pos_y;
-       
-      //compl0 = vec2((gl_FragCoord.x - mouse_pos_x) / mouseWheel, (gl_FragCoord.y + mouse_pos_y - 500.0) / mouseWheel);
- 
-      //compl0 = vec2(gl_FragCoord.x / 125.0 - 2.0 - mouse_pos_x, gl_FragCoord.y / 125.0 - 2.0 + mouse_pos_y - 2.4);
-      //compl0 = vec2(gl_FragCoord.x / mouseWheel - 2.0 - mouse_pos_x, gl_FragCoord.y / mouseWheel - 2.0 + mouse_pos_y - 2.4);
-
+      float kx = gl_FragCoord.x / 1200.0;
+      float ky = gl_FragCoord.y / 800.0;
+      compl0 = vec2(mouse_pos_x - width + kx * 2.0 * width, mouse_pos_y - height + ky * 2.0 * height);
+           
       //compl0 = vec2((gl_FragCoord.x - 400.0 - mouse_pos_x) / 100.0, (gl_FragCoord.y - 400.0 - mouse_pos_y) / 100.0);
       //compl0 = vec2(100.0 + (gl_FragCoord.x / 800.0 - 0.5) * 100.0, 100.0 + (gl_FragCoord.y / 800.0 - 0.5) * 100.0);
       //compl0 = vec2((gl_FragCoord.x - 400.0) / 100.0, (gl_FragCoord.y - 400.0) / 100.0);
@@ -94,7 +91,9 @@
     var glblMouseCoordY;
     var size = 100.0;
     var zoom = 1.0;
-
+    var width;
+    var height;
+    var new_catch_coord;
 
     function initGL(canvas) {
       try {
@@ -166,6 +165,8 @@
       shaderProgram.mouse_pos_x_uniform = gl.getUniformLocation(shaderProgram, "mouse_pos_x");
       shaderProgram.mouse_pos_y_uniform = gl.getUniformLocation(shaderProgram, "mouse_pos_y");
       shaderProgram.mousewheel_uniform = gl.getUniformLocation(shaderProgram, "mouseWheel");
+      shaderProgram.heightUniform = gl.getUniformLocation(shaderProgram, "height");
+      shaderProgram.widthUniform = gl.getUniformLocation(shaderProgram, "width");
 
     }
 
@@ -179,6 +180,8 @@
       gl.uniform1f(shaderProgram.mouse_pos_x_uniform, mouse_pos_x);
       gl.uniform1f(shaderProgram.mouse_pos_y_uniform, mouse_pos_y);
       gl.uniform1f(shaderProgram.mousewheel_uniform, zoom);
+      gl.uniform1f(shaderProgram.heightUniform, height);
+      gl.uniform1f(shaderProgram.widthUniform, width);
 
       //gl.uniform2f(shaderProgram.CurPos_uniform, CurPos);
 
@@ -230,7 +233,11 @@
         alert(xmlhttp.responseText);
       }
       */
-      mouse_pos_x = mouse_pos_y = 0;
+      catch_coord = { x: 0, y: 0 };
+      width = 1.5;
+      height = 1.0;
+      mouse_pos_x = -0.5;
+      mouse_pos_y = 0;
       //OldWheel = 125.0;
       zoom = 1;
 
@@ -346,8 +353,13 @@
         glblMouseCoordY = e.clientY;
 
         if (flag) {
+          /*
           mouse_pos_x -= e.movementX * 0.003 * zoom;
           mouse_pos_y += e.movementY * 0.003 * zoom;
+          */
+          mouse_pos_x += -(e.clientX - catch_coord.x) / 400.0 * zoom;
+          mouse_pos_y += (e.clientY - catch_coord.y) / 400.0 * zoom;
+          catch_coord = { x: e.clientX, y: e.clientY };
           //mouse_pos_x += e.movementX;
           //mouse_pos_y += e.movementY
           //gl.uniform1f(shaderProgram.mouse_pos_x_uniform, mouse_pos_x);
@@ -355,8 +367,24 @@
         }
       }
       function MouseWheelProcess(e) {
+        /*
         OldWheel += e.deltaY;
         zoom = zoom * (event.deltaY > 0 ? 1.1 : 0.8);
+        */
+        if (event.deltaY > 0) {
+          mouse_pos_x = -(event.clientX - 600.0) / 600.0 * width + mouse_pos_x;
+          mouse_pos_y = -(event.clientY - 400.0) / 400.0 * -height + mouse_pos_y;
+          width *= 2.0;
+          height *= 2.0;
+          zoom *= 2.0;
+        }
+        else if (event.deltaY < 0) {
+          mouse_pos_x = (event.clientX - 600.0) / 600.0 * width / 2 + mouse_pos_x;
+          mouse_pos_y = (event.clientY - 400.0) / 400.0 * -height / 2 + mouse_pos_y;
+          width /= 2.0;
+          height /= 2.0;
+          zoom /= 2.0;
+        }
       }
 
     </script>
