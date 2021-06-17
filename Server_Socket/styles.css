@@ -1,9 +1,85 @@
- 
-p {
-     font-family: 'Times New Roman', Times, serif;
-     font-size: 1.4em;
-     color: black;
+body {
+    background-color: white;
+    margin: 0;
+    padding-bottom: 46px;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+  #form {
+    background: rgba(0, 0, 0, 0.15);
+    padding: 4px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    height: 48px;
+    box-sizing: border-box;
+    backdrop-filter: blur(10px);
+  }
+
+  :root {
+	--dark-color-a: #667aff;
+	--dark-color-b: #7386ff;
+	--light-color: #e6e9ff;
+	--success-color: #5cb85c;
+	--error-color: #d9534f;
 }
+.message-container-class {
+    background-color: #7386ff;
+	padding: 10px;
+	height: 600px;
+    width: 800px;
+	margin: 30px auto;
+	overflow: hidden;
+    border-radius: 25px;
+}
+
+.message-container-class .local_container   {
+	overflow-y: auto;
+    background-color: white;
+	height: 500px;
+    width: 770px;
+    margin-left: 11px;
+}
+
+  .single_message {
+	padding: 30px;
+	max-height: 500px;
+	overflow-y: scroll;
+}
+  .container {
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 10px;
+	margin-top: 10px;
+	background-color: var(--light-color);
+	border-radius: 5px;
+	overflow-wrap: break-word;
+	overflow-y: auto;
+    text-align: left;
+
+}
+  .container .username_class {
+    font-family: 'Times New Roman', Times, serif;
+
+    font-size: 15px;
+	font-weight: bold;
+	color: var(--dark-color-b);
+	opacity: 0.7;
+	margin-bottom: 7px;
+}
+
+  #form > button {
+    background: #333;
+    border: none;
+    padding: 0 16px;
+    margin: 4px;
+    border-radius: 3px;
+    outline: none;
+    color: #fff;
+  }
+
 
 #base_input {
     margin: 10px;
@@ -21,8 +97,8 @@ p {
 }
 
 #my_message {
-    height: 40px;
-    width: 130px;
+    height: 37px;
+    width: 230px;
     box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 4px;
@@ -30,14 +106,17 @@ p {
     background-color: white;
     background-position: 10px 10px;
     background-repeat: no-repeat;
-    padding: 12px 20px 12px 40px;
     transition: width 0.4s ease-in-out;
     margin: 5px;
     overflow: auto;
 }
 
-#my_message:focus {
-    height: 40px;
-    width: 700px;
-    overflow: auto;
+.main_header {
+    font-family: 'Times New Roman', Times, serif;
+    margin-left: 10px;
+    font-size: 30px;
+    color: white;
 }
+
+
+
