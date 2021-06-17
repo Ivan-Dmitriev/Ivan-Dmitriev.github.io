@@ -1,7 +1,7 @@
  
- p {
-	 font-family: 'Times New Roman', Times, serif;
-	 font-size: 1.4em;
+p {
+     font-family: 'Times New Roman', Times, serif;
+     font-size: 1.4em;
      color: black;
 }
 
@@ -21,6 +21,7 @@
 }
 
 #my_message {
+    height: 40px;
     width: 130px;
     box-sizing: border-box;
     border: 2px solid #ccc;
@@ -32,8 +33,11 @@
     padding: 12px 20px 12px 40px;
     transition: width 0.4s ease-in-out;
     margin: 5px;
+    overflow: auto;
 }
 
 #my_message:focus {
+    height: 40px;
     width: 700px;
+    overflow: auto;
 }

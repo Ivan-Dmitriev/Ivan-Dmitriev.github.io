@@ -65,10 +65,10 @@
 
 <body>
   <ul id="messages"></ul>
-  <form id="form" action="">
+  <form id="form" action="" name="Myform">
     <input id="myuser_name" type="text" name="User_name" /><br>
     <input id="my_message" type="text" name="User_message" /><br>
-    <button>Send</button>
+    <button onclick="document.Myform.User_message.focus()">Send</button>
   </form>
   <script src="/socket.io/socket.io.js"></script>
 
@@ -79,13 +79,15 @@
     var form = document.getElementById('form');
     var input = document.getElementById('my_message');
     var user_name = document.getElementById('myuser_name');
+    var my_user_name = user_name.value;
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      my_user_name = user_name.value;
       if (input.value) {
         if (user_name.value == '')
-          user_name.value = "Default user"
-        socket.emit('chat message', user_name.value + ': ' + input.value);
+          my_user_name = "Default user"
+        socket.emit('chat message', my_user_name + ': ' + input.value);
         input.value = '';
       }
     });
