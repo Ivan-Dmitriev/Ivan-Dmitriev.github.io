@@ -7,7 +7,7 @@
     <p>Chat server</p>
     <input id="myuser_name" type="text" name="User_name" /><br>
     <input id="my_message" type="text" name="User_message" onkeydown="changeMessage(event)" /><br>
-    
+
     <button id="send" onclick="sendMessage()">Send message</button>
     <button id="base_input" onclick="getMessage()">Get message</button>
 
@@ -24,18 +24,18 @@
         } */
         function addNewMessage(str) {
             Messages.push(str);
-        } 
+        }
         function CreateChat() {
             current_message = document.getElementById("my_message").value;
             if (current_message == "")
-              current_message = "Test message";
+                current_message = "Test message";
             document.getElementById("single_user_message").innerHTML = "";
-            
+
             for (let i = 0; i < Messages.length; i++) {
                 const elem = document.createElement("p");
                 if (mymessage != "")
-                  if (Messages[i][0].charAt(0) === ":")
-                     Messages[i] = "Default user" + Messages[i]; 
+                    if (Messages[i][0].charAt(0) === ":")
+                        Messages[i] = "Default user" + Messages[i];
                 const Textnode = document.createTextNode(Messages[i]);
                 elem.appendChild(Textnode);
                 const My_body = document.getElementById("single_user_message");
@@ -63,15 +63,15 @@
                     throw new Error(`Response status is: ${response.status}`);
                 NewMessage = JSON.parse(await responce.text());
                 if (OldMessage[0] != NewMessage[0])
-                  addNewMessage(NewMessage);
+                    addNewMessage(NewMessage);
                 if (OldMessage[0] !== NewMessage[0])
-                  OldMessage = NewMessage;
+                    OldMessage = NewMessage;
                 console.log(NewMessage);
                 //let username = Object.keys(NewMessage[0]);
                 //let user_message = Object.values(NewMessage[0]);
                 //console.log(username);
                 //console.log(user_message);
-                
+
                 CreateChat();
             } catch (err) {
                 console.log(err.message);
@@ -82,7 +82,7 @@
         function changeMessage(e) {
             mymessage = document.getElementById("my_message").value;
             if (e.code == 'Enter')
-               sendMessage();
+                sendMessage();
         }
 
         function initChat() {
