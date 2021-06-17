@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>My projects</title>
+</head>
+
+
+<body>
+  <h1>
+    Quiz1
+  </h1>
+  <input type="file" onchange="readFile(this)">
+
+  <script>
+    var arrayOfStrings;
+    var arrayOfNumbers = [];
+
+    function OutputWords(freqMap) {
+      let Myx = '', Myy = '';
+
+      alert(`X ` + Myx);
+      alert(`Y ` + Myy);
+    }
+    function parseArrayOfSttrings(String_array) {
+      for (let i = 0; i < String_array.length; i++) {
+        arrayOfNumbers[i] = parseInt(String_array[i]);
+      }
+    }
+    function compareNumbers(a, b) {
+      return a - b;
+    }
+    function find_missing(array_of_numbers) {
+      array_of_numbers.sort(compareNumbers);
+      var min_number = array_of_numbers[0], i = 0, j = 1;
+
+      while (array_of_numbers[i] === (array_of_numbers[j] - 1)) {
+        min_number = array_of_numbers[j];
+        i++;
+        j++;
+      }
+      return min_number + 1;
+    }
+    function readFile(input) {
+      let file = input.files[0], file_string;
+
+      let reader = new FileReader();
+
+      reader.readAsText(file);
+
+      reader.onload = function () {
+        //console.log(reader.result);
+
+        file_string = reader.result;
+        arrayOfStrings = file_string.split(' ');
+        parseArrayOfSttrings(arrayOfStrings);
+        //file_string = file_string(); 
+        //console.log(arrayOfStrings);
+        console.log(find_missing(arrayOfNumbers));
+        alert(find_missing(arrayOfNumbers));
+      };
+
+      reader.onerror = function () {
+        console.log(reader.error);
+      };
+    }
+
+  </script>
+</body>
+
+</html>
