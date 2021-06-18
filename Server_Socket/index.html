@@ -19,7 +19,7 @@
       onfocus="document.getElementById('myuser_name').value=''" /><br>
     <input id="my_message" type="text" name="User_message"
       onfocus="document.getElementById('my_message').value=''" /><br>
-    <button>Send</button>
+    <button id="best_button">Send</button>
   </form>
   <script src="/socket.io/socket.io.js"></script>
 
@@ -32,18 +32,35 @@
     var input = document.getElementById('my_message');
     var user_name = document.getElementById('myuser_name');
     var my_user_name = user_name.value;
+    var array_of_users = [];
+    var index_current_user = -1;
 
     input.value = "Enter message";
     user_name.value = "Enter username";
 
-    form.addEventListener('submit', function (e) {
+    function addNewUser(str) {
+      array_of_users.push(str);
+    };
 
+    form.addEventListener('submit', function (e) {
       e.preventDefault();
       my_user_name = user_name.value;
+      if (index_current_user == -1) {
+        addNewUser(my_user_name);
+        index_current_user++;
+      }
+      else if (array_of_users.indexOf(my_user_name) == -1) {
+        addNewUser(my_user_name);
+        index_current_user++;
+      }
+      else {
+        index_current_user = array_of_users.indexOf(my_user_name);
+      }
+
       if (input.value) {
         if (user_name.value == '')
           my_user_name = "Default user"
-        socket.emit('chat message', my_user_name + ': ' + input.value);
+        socket.emit('chat message', input.value);
         input.value = '';
       }
     });
@@ -52,9 +69,8 @@
       var message_background = document.createElement('div');
 
       var message_user = document.createElement('p');
-      message_user.textContent = user_name.value;
+      message_user.textContent = array_of_users[index_current_user];
       message_user.setAttribute("class", "username_class");
-
 
       //var item = document.createElement('div');
       message_background.textContent = msg;
